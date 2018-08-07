@@ -1,0 +1,55 @@
+<app-completar-fechas [askCompletaFechas]="askCompletarFechas" (onCompletarFechas)="onCompletarFechas($event)"></app-completar-fechas>
+
+
+
+<div class="content" padding>
+  <form  #checkForm="ngForm">
+<mat-card>
+       <mat-card-title>
+       <strong>{{nombrechecklist}}</strong>
+     </mat-card-title>
+  <mat-list>
+    
+<mat-list-item *ngFor="let control of checklistcontroles; let i = index">
+<span matTooltip="crea una incidencia!">
+  <app-boton-incidencia   [origen]="incidencia[i]" [tipoOrigen]="'Checklist'" (nuevaIncidenciaCreada)="nuevaIncidencia($event,i)"></app-boton-incidencia>
+</span>
+  <span matTooltip="click to delete!"><mat-icon *ngIf="control.foto" name="camera-alt" item-left (click)="control.foto=''">camera_alt</mat-icon></span>
+  <span matTooltip="click to delete!"><mat-icon *ngIf="control.descripcion"  name="clipboard" item-left (click)="control.descripcion=''">assignment</mat-icon></span>
+  <label class="label-item" (click)="opciones(control)">{{control.nombrecontrol}}</label>
+  <div class="listitem"> 
+  <div class="div-image">
+  <my-images class="my-images-list" [index]="i" [currentControl]="control" (image)="takeFoto($event,control)"  ></my-images>
+  </div>
+  <!-- <mat-form-field>   -->
+      <mat-form-field class="descripcion">
+    <input matInput  style="margin-left:10px" name="descripcion{{i}}" [(ngModel)]="control.descripcion" placeholder="{{'descripcion' | translate}}" />
+  </mat-form-field>
+  <!-- </mat-form-field> -->
+ <mat-select class="select" placeholder=""  name="checked{{i}}"  [(ngModel)]="control.checked" (selectionChange)="changeSelected($event,i)">
+    <mat-option  value="true">{{"correcto" | translate}}</mat-option>
+    <mat-option  value="false">{{"incorrecto" | translate}}</mat-option>
+    <mat-option  value="na">{{"no aplica" | translate}}</mat-option>
+    <mat-option  value="valor">{{"Valor" | translate}}</mat-option>
+    <!-- <mat-option  value="incidencia">{{"Crea incidencia" | translate}}</mat-option> -->
+  </mat-select>
+  <mat-form-field *ngIf="control.checked !== 'true' && control.checked !== 'false'  && control.checked !== 'na'">   
+    <input matInput required class="valor"  name="valor{{i}}"  color="accent" [(ngModel)]="control.valor" (change)="changeValor(control)">
+  </mat-form-field>
+  </div>
+  </mat-list-item>
+  </mat-list>
+<hr>   
+<my-images [index]="i" [currentControl]="control" (image)="takeFoto($event)"  style="width:30%; display:flex; float:left;margin-right: 15px"></my-images> 
+<button  [disabled]="!checkForm.form.valid" mat-raised-button  color="accent" [disabled]="desactivado"  (click)="terminar()" style="width: 30%;">{{"terminar" | translate}}</button>
+<button mat-raised-button  color="warn" (click)="cancelar()" style="width: 30%;">{{"cancelar" | translate}}</button>
+</mat-card>
+</form>
+   <mat-card>
+     <mat-card-title>
+     </mat-card-title>
+    <mat-card-content *ngIf="base64Image" >
+      <img [src]="base64Image" *ngIf="base64Image" />
+</mat-card-content>
+  </mat-card>
+</div>

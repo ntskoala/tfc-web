@@ -1,0 +1,36 @@
+<app-completar-fechas [askCompletaFechas]="askCompletarFechas" (onCompletarFechas)="onCompletarFechas($event)"></app-completar-fechas>
+
+<div class="content" padding>
+    <form  #checkForm="ngForm">
+  <mat-card>
+         <mat-card-title>
+         <strong>{{inputMantenimiento.nombreMaquina}}</strong>
+       </mat-card-title>
+    <mat-list>
+  
+  <mat-list-item >
+    <div class="item">
+        <span matTooltip="crea una incidencia!" style="margin-right:25px;">
+            <app-boton-incidencia   [origen]="incidencia" [tipoOrigen]="'Mantenimientos'" (nuevaIncidenciaCreada)="nuevaIncidencia($event)"></app-boton-incidencia>
+          </span>
+    <label class="label-item" [ngClass]="{'onDate':!inputMantenimiento.isbeforedate,'beforeOnDate':inputMantenimiento.isbeforedate}">{{inputMantenimiento.nombreMantenimiento}}</label>
+         <span *ngIf="inputMantenimiento.isbeforedate" [ngClass]="{'onDate':!inputMantenimiento.isbeforedate,'beforeOnDate':inputMantenimiento.isbeforedate}"> - {{inputMantenimiento.fecha_prevista | date:'dd-MM-yyyy'}} </span> 
+    <div class="listitem"> 
+
+     <mat-slide-toggle style="margin-top: -28px;margin-right: 10px;" (change)="cambio($event,inputMantenimiento)"
+            class="check"
+            [checked]="inputMantenimiento.checked">
+          
+        </mat-slide-toggle>
+    </div>
+    </div>
+    </mat-list-item>
+    </mat-list>
+  <hr>   
+  <button  [disabled]="!checkForm.form.valid" mat-raised-button  color="accent" [disabled]="desactivado"  (click)="terminar()" style="width: 30%;">{{"terminar" | translate}}</button>
+  <button mat-raised-button  color="warn" (click)="cancelar()" style="width: 30%;">{{"cancelar" | translate}}</button>
+
+  </mat-card>
+  </form>
+
+  </div>

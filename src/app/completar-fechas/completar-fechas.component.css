@@ -1,0 +1,18 @@
+.ifCompletarFechas{
+    background-color: lightgrey;
+    width: 500px;
+    height: 200px;
+    position: absolute;
+    top: 250px;
+    left: 300px;
+    z-index: 9;
+    padding: 100px;
+    padding-top:50px;
+    border-style: outset;
+}
+.close {
+    position: absolute;
+    cursor: pointer;
+    top: 2px;
+    right: 2px;
+  }

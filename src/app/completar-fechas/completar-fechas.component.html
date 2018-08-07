@@ -1,0 +1,12 @@
+<div *ngIf="askCompletaFechas" class="ifCompletarFechas">
+        <mat-toolbar>{{'completarFechasP' | translate}}</mat-toolbar>
+        <p></p>
+    <mat-slide-toggle [(ngModel)]="completaFechas">{{'completarFechas' | translate}}</mat-slide-toggle>
+    <p *ngIf="completaFechas">{{'okCompletarFechas' | translate}}</p>
+    <p *ngIf="!completaFechas">{{'noCompletarFechas' | translate}}</p>
+    <hr><p></p>
+    <button mat-raised-button color="accent" (click)="okcompletarFechas()">Ok</button>
+    
+
+    <button  class="close" color="accent" mat-mini-fab (click)="cerrarCompletarFechas()"><mat-icon>close</mat-icon></button>    
+</div>

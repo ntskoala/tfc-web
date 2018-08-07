@@ -1,0 +1,29 @@
+<app-completar-fechas [askCompletaFechas]="askCompletarFechas" (onCompletarFechas)="onCompletarFechas($event)"></app-completar-fechas>
+
+<div class="content" padding>
+   <mat-card>
+     <mat-card-title>
+       <strong>{{currentControl.nombre}} {{currentControl.pla}}</strong>
+     </mat-card-title>
+    <mat-card-content>
+       <mat-list-item> <!--pattern="[0-9\-]*"-->
+
+        <!--<label floating>{{"valor" | translate}}</label>
+        <input type="number" step="0.01"  [(ngModel)]="valor">-->
+        <mat-form-field>   <input matInput class="control" type="text" required [placeholder]="'valor' | translate" 
+          [(ngModel)]="valor" name="valor"></mat-form-field>
+
+      </mat-list-item>
+      <hr>   
+<!--<button mat-button (click)="takeFoto()" twitter style="width: 47%;">{{"foto" | translate}}</button> -->
+<div style="width:100%">
+<my-images (image)="takeFoto($event)" style="width:30%; display:flex; float:left;margin-right: 15px"></my-images>
+<button mat-raised-button color="accent" (click)="terminar()" [disabled]="desactivado" twitter style="width: 30%;">{{"terminar" | translate}}</button>
+<button mat-raised-button  color="warn" (click)="status.emit('Home')" style="width: 30%;">{{"cancelar" | translate}}</button>
+<app-boton-incidencia  [origen]="incidencia" [tipoOrigen]="'Control'" (nuevaIncidenciaCreada)="nuevaIncidencia($event)"></app-boton-incidencia>
+</div>
+      <img [src]="base64Image" *ngIf="base64Image" />
+</mat-card-content>
+  </mat-card>
+  
+</div>

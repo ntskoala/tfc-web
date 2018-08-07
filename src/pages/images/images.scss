@@ -1,0 +1,22 @@
+.botonfoto{
+    width: 47%;
+    background-color: #ffd740;
+    height: 36px;
+    line-height: 36px;
+    padding-left: 45%;
+    padding-right: 45%;
+
+}
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: red;
+}
+
+.inputfile {
+  opacity: 0;
+  width: 0px;
+}
+
+.inputlabel:hover {
+	cursor: pointer; /* "hand" cursor */
+}

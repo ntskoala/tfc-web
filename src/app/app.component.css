@@ -1,0 +1,16 @@
+.titulo{
+    width:50%;
+    float: left;
+    margin-left:15px;
+}
+.logo{
+    width: 50%;
+}
+.logo img{
+     float:right;
+}
+.frame{
+    width:800px;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,0 +1,143 @@
+
+<div class="content" padding>
+<div id="logo_empresa">
+  <img [src]="logoempresa" (error)="logoempresa='./assets/img/pixel.png'" height="100px">
+</div>
+   <mat-card>
+     <mat-card-title>Total Food Control
+     </mat-card-title>
+    <mat-card-content>
+
+
+
+      <mat-expansion-panel [expanded]="miscontroles.length < 4" *ngIf="miscontroles.length > 0">
+        <mat-expansion-panel-header> 
+              <mat-panel-title>
+                  <img mat-list-avatar src="assets/img/temp.png" height="25px">
+                {{'Controles'|translate}}
+              </mat-panel-title> 
+               <mat-panel-description>
+               {{miscontroles.length}} {{'Controles'|translate}} {{'para realizar'|translate}}
+              </mat-panel-description>
+            </mat-expansion-panel-header> 
+            
+
+   <mat-list *ngFor="let control of miscontroles">
+    <mat-list-item (click)="goControl(control)">
+        <span class="elem" [ngClass]="{'onDate':!control.isbeforedate,'beforeOnDate':control.isbeforedate,'porUso':control.frecuencia == 'por uso'}">             
+      {{control.nombre}} {{control.pla}}
+        </span>
+      <img mat-list-avatar src="assets/img/temp.png" height="25px">
+    </mat-list-item>
+   </mat-list>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="mischecks.length < 4"  *ngIf="mischecks.length > 0">
+            <mat-expansion-panel-header> 
+                  <mat-panel-title>
+                      <img mat-list-avatar src="assets/img/checks.jpg" height="25px">
+                    {{'Checklists'|translate}}
+                  </mat-panel-title> 
+                   <mat-panel-description>
+                   {{mischecks.length}} {{'Checklists'|translate}} {{'para realizar'|translate}}
+                  </mat-panel-description>
+                </mat-expansion-panel-header> 
+                
+   <mat-list *ngFor="let check of mischecks">
+      <mat-list-item (click)="goChecklists(check)">
+          <span class="elem" [ngClass]="{'onDate':!check.isbeforedate,'beforeOnDate':check.isbeforedate,'porUso':check.frecuencia == 'por uso'}"> 
+            {{check.nombrechecklist}}
+          </span>
+        
+        <!-- {{check.nombrechecklist}} -->
+      <img mat-list-avatar src="assets/img/checks.jpg" height="25px">
+    </mat-list-item>
+   </mat-list> 
+
+  </mat-expansion-panel>
+  
+          <mat-expansion-panel [expanded]="mischeckslimpiezas.length < 4"  *ngIf="mischeckslimpiezas.length > 0">
+              <mat-expansion-panel-header> 
+                    <mat-panel-title>
+                        <img mat-list-avatar src="assets/img/clean.png" height="25px">
+                      {{'Limpiezas'|translate}}
+                    </mat-panel-title> 
+                     <mat-panel-description>
+                     {{mischeckslimpiezas.length}} {{'Limpiezas'|translate}} {{'para realizar'|translate}}
+                    </mat-panel-description>
+                  </mat-expansion-panel-header> 
+  
+   <mat-list *ngFor="let limpieza of mischeckslimpiezas">
+      <mat-list-item (click)="goChecklimpieza(limpieza)">
+          <span class="elem">               
+              {{limpieza.nombreLimpieza}}
+          </span>
+      <img mat-list-avatar src="assets/img/clean.png" height="25px">
+    </mat-list-item>
+   </mat-list>   
+
+
+  </mat-expansion-panel>
+  
+          <mat-expansion-panel [expanded]="mantenimientos.length < 4">
+              <mat-expansion-panel-header> 
+                    <mat-panel-title>
+                        <img mat-list-avatar src="assets/img/machine.png" height="25px">
+                      {{'Mantenimientos'|translate}}
+                    </mat-panel-title> 
+                     <mat-panel-description>
+                     {{mantenimientos.length}} {{'Mantenimientos'|translate}} {{'para realizar'|translate}}
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+            <mat-list>
+                  <mat-list-item (click)="goCheckMCorrectivo()">
+                    <span class="elem">               
+                        {{'mCorrectivo' | translate}}
+                    </span>
+                <img mat-list-avatar src="assets/img/correctivo.png" height="25px">
+              </mat-list-item>
+            </mat-list>
+
+   <mat-list *ngFor="let mantenimiento of mantenimientos">
+      <mat-list-item (click)="goCheckMantenimiento(mantenimiento)">
+          <span class="elem" [ngClass]="{'onDate':!mantenimiento.isbeforedate,'beforeOnDate':mantenimiento.isbeforedate}">               
+        {{mantenimiento.nombreMaquina}} {{mantenimiento.nombreMantenimiento}}
+          </span>
+      <img mat-list-avatar src="assets/img/machine3.png" height="25px">
+    </mat-list-item>
+   </mat-list>  
+  </mat-expansion-panel>
+  
+
+
+
+
+          <mat-expansion-panel [expanded]="calibraciones.length < 4"  *ngIf="calibraciones.length > 0">
+              <mat-expansion-panel-header> 
+                    <mat-panel-title>
+                        <img mat-list-avatar src="assets/img/balance.png" height="25px">
+                      {{'Calibraciones'|translate}}
+                    </mat-panel-title> 
+                     <mat-panel-description>
+                     {{calibraciones.length}} {{'Calibraciones'|translate}} {{'para realizar'|translate}}
+                    </mat-panel-description>
+                  </mat-expansion-panel-header> 
+                   
+   <mat-list *ngFor="let calibracion of calibraciones">
+      <mat-list-item (click)="goCheckMantenimiento(calibracion)">
+          <span class="elem" [ngClass]="{'onDate':!calibracion.isbeforedate,'beforeOnDate':calibracion.isbeforedate}">               
+        {{calibracion.nombreMaquina}} {{calibracion.nombreMantenimiento}}
+          </span>
+      <img mat-list-avatar src="assets/img/balance3.png" height="25px">
+    </mat-list-item>
+   </mat-list>  
+  </mat-expansion-panel>
+  
+                  
+
+    
+    </mat-card-content>
+   </mat-card>
+
+</div>

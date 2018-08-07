@@ -1,0 +1,75 @@
+
+<!--<modal [modal]="modal" (onCerrar)="cerrarModal()"></modal>-->
+<div class="content" padding>
+<div class="login-form">
+  <mat-card>
+    <mat-card-title>
+      <mat-toolbar color="accent">Login</mat-toolbar>
+    </mat-card-title>
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)">
+      <mat-card-content>
+        <mat-form-field>   <input matInput class="full-width" type="text" required [placeholder]="'Usuario' | translate" 
+          [(ngModel)]="usuario.usuario" name="user"></mat-form-field>
+        <mat-form-field>   <input matInput class="full-width" type="password" required [placeholder]="'Contraseña' | translate"
+          [(ngModel)]="usuario.password" name="password"></mat-form-field>
+          <span *ngIf="!idioma">
+        <label for="idioma">Seleccionar idioma</label>
+        <select class="white-select" required [(ngModel)]="usuario.idioma" name="idioma">
+          <option value="cat">Català</option>
+          <option value="es">Castellano</option>
+        </select>
+      </span>
+        <button class="button" mat-raised-button color="accent" type="submit" [disabled]="!loginForm.form.valid">
+          Enviar
+        </button>
+      </mat-card-content>
+      <mat-card-footer>
+
+      </mat-card-footer>
+    </form>
+  </mat-card>
+</div>
+</div>
+
+
+
+
+
+  <!--<mat-sidenav>
+
+
+    <h4>
+      {{"login" | translate }}
+      <div style="float:right"> <img src="assets/img/logo.png" height="25px" /> </div>
+      </h4>
+  </mat-sidenav>
+
+
+<div class="content" padding>
+  <div class="row">
+<div class="col">
+<img [src]="logoempresa" *ngIf="empresa" class="center logo"/>
+</div>
+</div>
+ 
+  <p>
+  </p>
+      <mat-list>
+ 
+      <mat-list-item>
+        <label floating>{{"nombre" | translate}}</label>
+        <input mat-input type="text" [(ngModel)]="nombre" />
+      </mat-list-item>
+ 
+      <mat-list-item>
+        <label floating>{{"password" | translate}}</label>
+        <input mat-input type="password" [(ngModel)]="password" />
+      </mat-list-item>
+    </mat-list>
+
+
+
+    <button mat-button (click)="login()" twitter style="width: 100%;">Login</button> 
+
+
+</div>-->

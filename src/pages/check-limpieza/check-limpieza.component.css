@@ -1,0 +1,13 @@
+
+.check{
+    float: right;
+    display: block;
+    margin-top:-11px
+}
+
+.item{
+    min-width:500px;
+    width:500px;
+    background-color: #eee;
+    height: 35px;
+}
