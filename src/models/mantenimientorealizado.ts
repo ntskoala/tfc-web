@@ -15,7 +15,8 @@ export class mantenimientoRealizado {
     public tipo2: string,
     public causas: string,
     public tipo_evento: string,
-    public idempresa: number
-    
+    public idempresa: number,
+    public pieza?:number,
+    public cantidadPiezas?:number
     ){}
   }

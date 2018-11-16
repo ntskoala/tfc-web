@@ -109,14 +109,25 @@ sendMailIncidencia(nuevaIncidencia){
       (respuesta)=>{
     let responsables = respuesta["data"];
     console.log("sendmail got users: ",responsables);
-    let body = "Nueva incidencia creada desde " + nuevaIncidencia.origen + "<BR>Por: " +  responsables[responsables.findIndex((responsable)=>responsable["value"] == nuevaIncidencia.responsable)]["label"]
-    body +=   "<BR>Con fecha y hora: " + moment(nuevaIncidencia.fecha).format('DD-MM-YYYY hh-mm') +  "<BR>"
-    body +=   "<BR>Nombre: " + nuevaIncidencia.incidencia +  "<BR>"
-    body +=   "Descripción: " + nuevaIncidencia.descripcion;
-    body +=   "<BR>Solución inmediata propuesta: " + nuevaIncidencia.solucion;
-    body +=   "<BR>Ir a la incidencia: " + server + "empresas/"+ nuevaIncidencia.idempresa +"/incidencias/0/" + nuevaIncidencia.id + ""
+    // let body = "Nueva incidencia creada desde " + nuevaIncidencia.origen + "<BR>Por: " +  responsables[responsables.findIndex((responsable)=>responsable["value"] == nuevaIncidencia.responsable)]["label"]
+    // body +=   "<BR>Con fecha y hora: " + moment(nuevaIncidencia.fecha).format('DD-MM-YYYY hh-mm') +  "<BR>"
+    // body +=   "<BR>Nombre: " + nuevaIncidencia.incidencia +  "<BR>"
+    // body +=   "Descripción: " + nuevaIncidencia.descripcion;
+    // body +=   "<BR>Solución inmediata propuesta: " + nuevaIncidencia.solucion;
+    // body +=   "<BR>Ir a la incidencia: " + server + "empresas/"+ nuevaIncidencia.idempresa +"/incidencias/0/" + nuevaIncidencia.id + ""
+    // if (nuevaIncidencia.origen != 'incidencias')
+    // body +=    "<BR>Ir al elemento " + server + "empresas/"+ nuevaIncidencia.idempresa +"/"+ nuevaIncidencia.origenasociado +"/"+ nuevaIncidencia.idOrigenasociado +"/" + nuevaIncidencia.idOrigen + ""
+    
+    let body =    nuevaIncidencia.incidencia +  "<BR>"
+    body +=    nuevaIncidencia.descripcion +  "<BR>";
+    if (nuevaIncidencia.solucion.length >0) body +=   "Solución inmediata propuesta: " + nuevaIncidencia.solucion+ "<BR>";
+    //body = "Nueva incidencia creada desde " + nuevaIncidencia.origen + "<BR>Por: " +  responsables[responsables.findIndex((responsable)=>responsable["value"] == nuevaIncidencia.responsable)]["label"]
+    body +=   moment(nuevaIncidencia.fecha).format('DD-MM-YYYY hh-mm a') +  "<HR>"
+    body +=   "<span style='float:lelft'><a href='" + server + "empresas/"+ nuevaIncidencia.idempresa +"/incidencias/0/" + nuevaIncidencia.id + "'><img src='https://tfc.proacciona.es/assets/images/verIncidencia.png'></a></span>";
+    console.log(nuevaIncidencia.origen,nuevaIncidencia.origen != 'incidencias');
     if (nuevaIncidencia.origen != 'incidencias')
-    body +=    "<BR>Ir al elemento " + server + "empresas/"+ nuevaIncidencia.idempresa +"/"+ nuevaIncidencia.origenasociado +"/"+ nuevaIncidencia.idOrigenasociado +"/" + nuevaIncidencia.idOrigen + ""
+    body +=    "<span style='float:right'><a href='" + server + "empresas/"+ nuevaIncidencia.idempresa +"/"+ nuevaIncidencia.origenasociado +"/"+ nuevaIncidencia.idOrigenasociado +"/" + nuevaIncidencia.idOrigen + "'><img src='https://tfc.proacciona.es/assets/images/verElemento.png'></a></span>";
+
     let parametros2 = "&idempresa=" + nuevaIncidencia.idempresa + "&body="+body;
         this.servidor.getObjects(URLS.ALERTES, parametros2).subscribe(
           response => {

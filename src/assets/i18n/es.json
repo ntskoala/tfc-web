@@ -51,6 +51,9 @@
         "ok":"Aceptar",
         "errorcodigo": "Error en el código!"
     },
+    "por uso": "Por uso",
+    "cancelar":"Cancelar",
+    "guardar":"Guardar",
     "asistencia": "Asistencia",
     "control": "control",
     "checklist": "checklist",
@@ -62,9 +65,10 @@
     "critico":"critico: ",
     "foto": "foto",
     "terminar": "enviar",
-    "correcto": "correcto",
-    "incorrecto": "incorrecto",
-    "no aplica":"no aplica",
+    "correcto": "Correcto",
+    "incorrecto": "Incorrecto",
+    "no aplica":"No aplica",
+    "Valor":"Valor",
     "descripcion":"Descripción",
     "completarFechas":"Completar todas las fechas",
     "completarFechasP":"¿Completar todas las fechas atrasadas?",    
@@ -76,9 +80,10 @@
      "fecha":"Fecha",
      "tipo":"Tipo",
     "elemento":"Elemento",
-    "descripcion":"Comentarios",
+    "descripcion":"Descripción causas",
     "causas":"Causas",
-    "responsable":"Responsable"
+    "responsable":"Responsable",
+    "cantidadPiezas":"Cantidad P."
     },
     "incidencia":
     {

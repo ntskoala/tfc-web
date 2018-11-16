@@ -10,37 +10,51 @@
      <!-- <form  #crearUsuarioForm="ngForm" (ngSubmit)="terminar(crearUsuarioForm.value)"> -->
 
      <mat-form-field>
-      <mat-select required placeholder="Selecciona máquina" [(value)]="selectedMachine" formControlName="maquina">
+      <mat-select required placeholder="Selecciona máquina" [(value)]="selectedMachine" (selectionChange)="maquinaChanged_selectPiezas($event)" formControlName="maquina">
           <!-- <mat-option value="null">Maquinas</mat-option> -->
         <mat-option *ngFor="let maquina of maquinas" [value]="maquina.idMaquina">{{maquina.nombreMaquina}}</mat-option>
       </mat-select>
     </mat-form-field>
 
+
+    <mat-form-field class="campo">
+      <mat-select required placeholder="Selecciona pieza"  formControlName="pieza">
+          <!-- <mat-option value="null">Maquinas</mat-option> -->
+        <mat-option *ngFor="let pieza of piezas" [value]="pieza.id">{{pieza.nombre}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field class="campo">
+      <input matInput type="number"  formControlName="cantidadPiezas"  placeholder="{{'maquinas.cantidadPiezas' | translate}}">
+    </mat-form-field>
+
+
       <div class="example-container">
           <mat-form-field >
             <input matInput  (change)="cambio($event)"   placeholder="{{'maquinas.mantenimiento' | translate}}" formControlName="mantenimiento">
           </mat-form-field>
-          <mat-form-field placeholder="fecha">
+          <mat-form-field placeholder="fecha" class="campo">
               <input style="width:110px"  matInput formControlName="fecha" [matDatepicker]="picker" (onSelect)="setDate()">
               <mat-datepicker-toggle mdSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
+              <mat-datepicker #picker ></mat-datepicker>
             </mat-form-field> 
-            <mat-form-field>
+            <mat-form-field class="campo">
                 <mat-select  required formControlName="tipo"   placeholder="{{'maquinas.tipo' | translate}}">
                   <mat-option value="interno">{{'interno' | translate}}</mat-option>
                   <mat-option value="externo">{{'externo' | translate}}</mat-option>
                 </mat-select>
               </mat-form-field>   
-              <mat-form-field>
+              <!-- <mat-form-field>
                   <input matInput formControlName="elemento"  placeholder="{{'maquinas.elemento' | translate}}">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput formControlName="descripcion"  placeholder="{{'maquinas.descripcion' | translate}}">
+                </mat-form-field> -->
+                <mat-form-field style="width:400px">
+                    <input matInput  formControlName="descripcion"  placeholder="{{'maquinas.descripcion' | translate}}">
                   </mat-form-field>
-                  <mat-form-field>
+                  <!-- <mat-form-field>
                       <input matInput  formControlName="causas" placeholder="{{'maquinas.causas' | translate}}">
-                    </mat-form-field>
-                    <mat-form-field>
+                    </mat-form-field> -->
+                    <mat-form-field class="campo">
                         <input matInput  formControlName="responsable"  placeholder="{{'maquinas.responsable' | translate}}">
                       </mat-form-field>
       </div>

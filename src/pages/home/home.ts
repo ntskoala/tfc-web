@@ -47,7 +47,7 @@ controlesLimpiezas: checkLimpieza[]=[];
 public logoempresa;
 empresa;
 hoy: Date = new Date();
-  constructor(private sync: Sync, private empresasService: EmpresasService) {
+  constructor(private sync: Sync, public empresasService: EmpresasService) {
 
 }
 
@@ -81,6 +81,7 @@ sincronizate(){
             let usuario = this.empresasService.usuarioactivo.id;
             let tipouser = this.empresasService.usuarioactivo.tipouser;
             let superuser = this.empresasService.usuarioactivo.superuser;
+            console.log(tipouser);
             this.sync.getMisControles(usuario,empresa).subscribe(
             data => {
               console.log(data);
@@ -117,7 +118,7 @@ sincronizate(){
 
             this.sync.getMisChecklists(usuario,empresa).pipe(map(res => res.json())).subscribe(
             data => {
-              console.log(data)
+              //console.log(data)
                let resultados = JSON.parse(data);
                  //   console.log('resultado check: ' + resultados.success);
                 //    console.log('success check: ' +this.mischecks.data[0].nombre);
@@ -125,7 +126,7 @@ sincronizate(){
                 
                     resultados = resultados.data;
                     if (resultados){
-                    console.log("mischecklists: ", resultados);       
+                    //console.log("mischecklists: ", resultados);       
 
                       resultados.forEach (checklist => {
                         if (checklist.idusuario == usuario && (moment(checklist.fecha_).isSameOrBefore(moment(),'day')  || this.checkPeriodo(checklist.periodicidad2) == 'por uso')){
@@ -159,13 +160,14 @@ sincronizate(){
              this.sync.getMisLimpiezas(usuario,empresa).pipe(map(res => res.json())).subscribe(
             data => {
                let resultados = JSON.parse(data);
-                 //   console.log('resultado check: ' + resultados.success);
+
+                    
                 //    console.log('success check: ' +this.mischecks.data[0].nombre);
                 if (resultados.success){
                 
                     resultados = resultados.data;
                     if (resultados){
-                    //console.log("mislimpiezas: ", resultados);       
+                    console.log("mislimpiezas: ", resultados);       
 
                       resultados.forEach (limpieza => {
                         if (limpieza.idusuario == usuario &&  moment(limpieza.fecha).isSameOrBefore(moment(),'day')){

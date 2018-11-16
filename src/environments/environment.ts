@@ -7,6 +7,6 @@ export const environment = {
   production: false
 };
 // export const server = 'http://tfc.ntskoala.com/';
-// export const server = 'https://tfc.proacciona.es/';
+//export const server = 'https://tfc.proacciona.es/';
 
-export const server = 'https://tfc1-181808.appspot.com/';
+ export const server = 'https://tfc1-181808.appspot.com/';

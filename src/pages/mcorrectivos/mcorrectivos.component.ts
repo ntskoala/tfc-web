@@ -27,15 +27,18 @@ export class McorrectivosComponent implements OnInit {
 
   public insertMantenimiento: mantenimientoRealizado= new mantenimientoRealizado(null,0,null,'','',
   moment(new Date()).toDate(),moment(new Date()).toDate(),this.empresasService.usuarioactivo.id,'','','',
-  "interno","correctivo",'','',this.empresasService.usuarioactivo.idempresa);
+  "interno","correctivo",'','',this.empresasService.usuarioactivo.idempresa,0,0);
   public hoy: Date = new Date();
   public fecha_prevista: Date;
   public maquinas: Maquina[];
+  public piezas: object[];
   public selectedMachine:number=null;
   public fecha: Date = new Date();
   
   public checkForm = new FormGroup({
     maquina: new FormControl('', [Validators.required]),
+    pieza:new FormControl(),
+    cantidadPiezas:new FormControl(0, [Validators.required,Validators.pattern('[0-9]')]),
     mantenimiento: new FormControl('', [Validators.required]),
     fecha: new FormControl('', [Validators.required]),
     tipo:new FormControl(),
@@ -105,7 +108,8 @@ setDate(){
       
       this.insertMantenimiento.idmaquina = this.selectedMachine;
       this.insertMantenimiento.maquina = this.maquinas[this.maquinas.findIndex((maquina)=>maquina.idMaquina==this.selectedMachine)].nombreMaquina;
-
+      this.insertMantenimiento.pieza = resultado.pieza || 0;
+      this.insertMantenimiento.cantidadPiezas = resultado.cantidadPiezas || 0;
                   let param = "&entidad=mantenimientos_realizados"+"&idempresa="+this.empresasService.usuarioactivo.idempresa+"&userId="+this.empresasService.usuarioactivo.id;
                 this.servidor.postObject(URLS.STD_ITEM, this.insertMantenimiento,param).subscribe(
                   response => {
@@ -124,5 +128,28 @@ cambio(evento){
   cancelar(){
     console.log('cancelado');
     this.status.emit('Home');
+  }
+
+  maquinaChanged_selectPiezas(event){
+    console.log(event.value);
+    let idMaquina = event.value;
+                  let param = "&entidad=maquina_piezas"+"&idempresa="+this.empresasService.usuarioactivo.idempresa+"&field=idmaquina&idItem="+idMaquina;
+                this.servidor.getObjects(URLS.STD_SUBITEM,param).subscribe(
+                  response => {
+                    if (response.success) {
+                      //console.log('piezas', response.data);
+                      this.piezas=[{"id":0,"nombre":'ninguna'}];
+                      let resultados = response.data;
+                      console.log(resultados);
+                      if (resultados){
+                      //console.log("misMantenimientos: ", resultados);       
+                        resultados.forEach (pieza => {
+                            this.piezas.push({"id":pieza.id,"nombre":pieza.nombre});
+                        });
+                        }
+                    }
+                  },
+                  error => console.log(error),
+                  () => { });
   }
 }

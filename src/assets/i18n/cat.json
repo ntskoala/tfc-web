@@ -43,6 +43,17 @@
         "email": "Direcció de email on s'enviaràn les alertes",
         "ok": "accepta"
     },
+    "empresa":{
+        "titulo": "Empresa",
+        "texto": "Introdueix el codi d'empresa per començar a usar l'app",
+        "codigo": "Còdi",
+        "cancel": "Cancel·lar",
+        "ok":"Acceptar",
+        "errorcodigo": "Error de còdi!"
+    },
+    "por uso": "Per ús",
+    "cancelar":"Cancel·lar",
+    "guardar":"Desar",
     "asistencia": "Asistencia",
     "control": "control",
     "checklist": "checklist",
@@ -54,9 +65,10 @@
     "critico":"critic: ",
     "foto": "foto",
     "terminar": "enviar",
-    "correcto": "correcte",
-    "incorrecto": "incorrecte",
-    "no aplica":"no aplica",
+    "correcto": "Correcte",
+    "incorrecto": "Incorrecte",
+    "no aplica":"No aplica",
+    "Valor":"Valor",
     "descripcion":"Descripció",
     "completarFechas":"Completar totes les dates",
     "completarFechasP":"¿Completar totes les dates endarrerides?",    
@@ -68,9 +80,10 @@
      "fecha":"Data",
      "tipo":"Tipus",
     "elemento":"Element",
-    "descripcion":"Comentaris",
+    "descripcion":"Descripció causes",
     "causas":"Causes",
-    "responsable":"Responsable"
+    "responsable":"Responsable",
+    "cantidadPiezas":"Quantitat P."
     },
     "incidencia":
     {

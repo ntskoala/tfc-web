@@ -265,7 +265,7 @@ public incidencia:any;
     let mensaje;
     this.translate.get("alertas."+incidencia).subscribe(resultado => { mensaje = resultado});
 
-    this.newIncidenciaAutomatica.incidencia = 'Incidencia en ' + this.currentControl.nombre + ' valor: ' + this.valor;
+    this.newIncidenciaAutomatica.incidencia =  + this.currentControl.nombre + ' con valor: ' + this.valor;
     this.newIncidenciaAutomatica.fecha = new Date(Date.UTC(this.newIncidenciaAutomatica.fecha.getFullYear(), this.newIncidenciaAutomatica.fecha.getMonth(), this.newIncidenciaAutomatica.fecha.getDate(), this.newIncidenciaAutomatica.fecha.getHours(), this.newIncidenciaAutomatica.fecha.getMinutes()))
     this.newIncidenciaAutomatica.idempresa = this.empresasService.seleccionada;
     this.newIncidenciaAutomatica.responsable = this.empresasService.usuarioactivo.id;
