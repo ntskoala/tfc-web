@@ -133,8 +133,8 @@ cambio(evento){
   maquinaChanged_selectPiezas(event){
     console.log(event.value);
     let idMaquina = event.value;
-                  let param = "&entidad=maquina_piezas"+"&idempresa="+this.empresasService.usuarioactivo.idempresa+"&field=idmaquina&idItem="+idMaquina;
-                this.servidor.getObjects(URLS.STD_SUBITEM,param).subscribe(
+                  let param = "&idempresa="+this.empresasService.usuarioactivo.idempresa+"&idmaquina="+idMaquina;
+                this.servidor.getObjects(URLS.PIEZAS,param).subscribe(
                   response => {
                     if (response.success) {
                       //console.log('piezas', response.data);

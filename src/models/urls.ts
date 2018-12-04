@@ -21,6 +21,7 @@ export const URLS = {
   PERIODICIDAD_CHECKLIST: base + 'periodicidadchecklist.php',
   ALERTAS: base + 'alertes.php',//email automático de valores de control superados
   ALERTES: base + 'alertes.php',//email automático de incidencias
+  PIEZAS: base + 'piezas.php',
   STD_ITEM: base + 'std_item.php',
   STD_SUBITEM: base + 'std_subitem.php',
 
