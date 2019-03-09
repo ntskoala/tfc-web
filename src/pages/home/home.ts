@@ -208,10 +208,10 @@ sincronizate(){
         
             resultados = resultados.data;
             if (resultados){
-            //console.log("misMantenimientos: ", resultados);       
-
+            console.log("misMantenimientos: ", resultados);       
               resultados.forEach (mantenimiento => {
-                if ( moment(mantenimiento.fecha).isSameOrBefore(moment(),'day') && (tipouser == 'Mantenimiento' || superuser == 1)){
+                // if ( moment(mantenimiento.fecha).isSameOrBefore(moment(),'day') && (tipouser == 'Mantenimiento' || superuser == 1)){
+                  if (mantenimiento.idusuario == usuario &&  moment(mantenimiento.fecha).isSameOrBefore(moment(),'day')){
                 let isbeforedate = moment(mantenimiento.fecha).isBefore(this.hoy,'day');
                 let repeticion = ''
                 if (mantenimiento.periodicidad){
@@ -249,7 +249,8 @@ sincronizate(){
             //console.log("misMantenimientos: ", resultados);       
 
               resultados.forEach (mantenimiento => {
-                if ( moment(mantenimiento.fecha).isSameOrBefore(moment(),'day')  && (tipouser == 'Mantenimiento' || superuser == 1)){
+                // if ( moment(mantenimiento.fecha).isSameOrBefore(moment(),'day')  && (tipouser == 'Mantenimiento' || superuser == 1)){
+                  if (mantenimiento.idusuario == usuario &&  moment(mantenimiento.fecha).isSameOrBefore(moment(),'day')){
                 let isbeforedate = moment(mantenimiento.fecha).isBefore(this.hoy,'day');
                 let repeticion = ''
                 if (mantenimiento.periodicidad){

@@ -56,12 +56,12 @@ public getMisLimpiezas(userid, idempresa): Observable<any>
         }
 public getMisMantenimientos(userid, idempresa): Observable<any>
     {
-            let mislimpiezas = this.http.get(`${this.baseurl}/views/getmantenimientos.php?idempresa=${idempresa}&_dc=1470480375978`);
+            let mislimpiezas = this.http.get(`${this.baseurl}/views/getmantenimientos.php?idempresa=${idempresa}&version=2&_dc=1470480375978`);
             return mislimpiezas;
         }
         public getMisCalibraciones(userid, idempresa): Observable<any>
         {
-                let mislimpiezas = this.http.get(`${this.baseurl}/views/getcalibraciones.php?idempresa=${idempresa}&_dc=1470480375978`);
+                let mislimpiezas = this.http.get(`${this.baseurl}/views/getcalibraciones.php?idempresa=${idempresa}&version=2&_dc=1470480375978`);
                 return mislimpiezas;
             }
 public setGerentes(idempresa): Observable<any>
