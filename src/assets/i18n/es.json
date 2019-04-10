@@ -104,6 +104,7 @@
     },
     "mCorrectivo":"Mantenimiento correctivo",
     "interno":"Interno",
-    "externo":"Externo"
+    "externo":"Externo",
+    "download":"Para descargar el informe de los últimos 7 días pulsa el botón  de descarga y espera, la generación del informe puede tardar un par de minutos."
 
 }

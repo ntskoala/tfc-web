@@ -7,7 +7,9 @@
   <button style="margin-left:15px"(click)="status='Login'">
     <mat-icon>account_circle</mat-icon>
   </button>
-
+  <button *ngIf="status != 'Login'" style="margin-left:15px" (click)="informes=true;">
+    <mat-icon>cloud_download</mat-icon>
+  </button>
   <div class="titulo">{{status}}</div>
   <div class="logo"><img src="./assets/img/logo.png"></div>
 </mat-toolbar>
@@ -20,3 +22,4 @@
 <page-check-limpieza class="check frame" *ngIf="status == 'Checklimpieza'" [inputCheckLimpieza]="limpiezas" (status)="cambiaEstado($event)"></page-check-limpieza>
 <app-mantenimientos class="check frame" *ngIf="status == 'CheckMantenimiento'" [inputMantenimiento]="mantenimiento" (status)="cambiaEstado($event)"></app-mantenimientos>
 <app-mcorrectivos class="check frame" *ngIf="status == 'CheckMCorrectivo'"  (status)="cambiaEstado($event)"></app-mcorrectivos>
+<app-informes class="informes frame" *ngIf="informes" (status)="cambiaEstado($event)" (onExit)="informes=false"></app-informes>

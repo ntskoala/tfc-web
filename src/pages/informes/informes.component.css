@@ -1,0 +1,33 @@
+.download-window{
+    width: 100vw;
+    height: 100vh;
+    background: rgba(116, 116, 116, 0.816);
+    /* padding: 50px; */
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.close{
+    position: absolute;
+    top:0px;
+    right:0px;
+}
+.downbutton{
+    float: left;
+    display: block;
+    margin-left: calc(50% - 12px);
+    margin-top: 25px;
+}
+.example-margin{
+    float: left;
+    margin-left: 20px;
+}
+.example-section{
+    background-color: #fff;
+    width: 600px;
+    height: 200px;
+    margin: auto;
+    margin-top: 200px;
+    border-radius: 5px;
+    padding: 25px;
+}

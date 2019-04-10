@@ -29,6 +29,15 @@ export class Servidor {
       .pipe(map((res: Response) => JSON.parse(res.json())));
   }
 
+  postSimple(url: string, object: Object,param?: string) {
+    let payload = JSON.stringify(object);        
+    let parametros = param;
+    return this.llamada.post(url + parametros, payload);
+  }
+  getSimple(url: string, param?: string) {     
+    let parametros = param;
+    return this.llamada.get(url + parametros);
+  }
   putObject(url: string, param: string, object: Object) {
     let payload = JSON.stringify(object);        
     let parametros = param + '&token=' + sessionStorage.getItem('token') + "&origen=tfcweb";

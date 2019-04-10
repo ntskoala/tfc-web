@@ -1,0 +1,26 @@
+<div class="download-window">
+  <section class="example-section">
+    <!-- <mat-checkbox class="example-margin" [(ngModel)]="pdf" >PDF</mat-checkbox>
+    <mat-checkbox class="example-margin" [(ngModel)]="xls">XLSX</mat-checkbox> -->
+    <div *ngIf="innerHtml.length<1">
+      <span>{{'download' | translate}}</span>
+    </div>
+  <button mat-mini-fab class="downbutton" color="primary" (click)="downloads()">
+    <span class="material-icons">cloud_download</span>
+  </button>
+
+  <div class="space"></div>
+
+  <div *ngIf="innerHtml.length>=1">
+
+    <mat-progress-bar mode="determinate" [value]="progreso"></mat-progress-bar>
+
+    <div class="space"></div>
+    {{'procesando' | translate}}
+    <div [innerHTML]=innerHtml></div>
+  </div>
+</section>
+   <button mat-mini-fab class="close" color="accent" (click)="close()">
+    <span class="material-icons">close</span>
+   </button>
+</div>

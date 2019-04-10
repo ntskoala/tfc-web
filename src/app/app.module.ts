@@ -97,6 +97,7 @@ import { MantenimientosComponent } from '../pages/mantenimientos/mantenimientos.
 import { CompletarFechasComponent } from './completar-fechas/completar-fechas.component';
 import { McorrectivosComponent } from '../pages/mcorrectivos/mcorrectivos.component';
 import { BotonIncidenciaComponent } from './components/boton-incidencia/boton-incidencia.component';
+import { InformesComponent } from '../pages/informes/informes.component';
 
 @NgModule({
   exports: [
@@ -162,6 +163,7 @@ export function createTranslateLoader(http: HttpClient) {
     CheckLimpiezaComponent,
     MantenimientosComponent,
     McorrectivosComponent,
+    InformesComponent,
     CompletarFechasComponent,
     BotonIncidenciaComponent
   ],

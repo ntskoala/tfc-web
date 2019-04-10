@@ -104,5 +104,6 @@
     },
     "mCorrectivo":"Manteniment correctiu",
     "interno":"Intern",
-    "externo":"Extern"
+    "externo":"Extern",
+    "download":"Per descarregar l'informe dels darrers 7 dies prem el botó de descàrrega i espera,  la generació de l'informe pot trigar un parell de minuts"
 }

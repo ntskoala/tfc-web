@@ -6,6 +6,7 @@ import {checkLimpieza} from '../models/checklimpieza'
 import {Mantenimiento} from '../models/mantenimiento'
 
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,6 +18,10 @@ export class AppComponent {
   limpiezas: checkLimpieza[];
   mantenimiento: Mantenimiento;
   status = "Login"
+  informes:boolean=false;
+constructor() {
+
+}
   // ids: number[]=[];
   // elemento:string;
   cambiaEstado(estado){
@@ -45,4 +50,7 @@ this.limpiezas = limpiezaZona;
 checkMantenimientoSeleccionado(mantenimiento){
   this.mantenimiento = mantenimiento;
   }
+
+
+
 }
