@@ -98,6 +98,7 @@ import { CompletarFechasComponent } from './completar-fechas/completar-fechas.co
 import { McorrectivosComponent } from '../pages/mcorrectivos/mcorrectivos.component';
 import { BotonIncidenciaComponent } from './components/boton-incidencia/boton-incidencia.component';
 import { InformesComponent } from '../pages/informes/informes.component';
+import { ServiciosEntradaComponent } from '../pages/servicios-entrada/servicios-entrada.component';
 
 @NgModule({
   exports: [
@@ -165,7 +166,8 @@ export function createTranslateLoader(http: HttpClient) {
     McorrectivosComponent,
     InformesComponent,
     CompletarFechasComponent,
-    BotonIncidenciaComponent
+    BotonIncidenciaComponent,
+    ServiciosEntradaComponent
   ],
   imports: [
     BrowserModule,

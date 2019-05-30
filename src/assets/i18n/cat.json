@@ -102,6 +102,20 @@
       "valoracion":"Valoració",
       "fecha_valoracion":"Data valoració"
     },
+    "entradasMP":{
+        "Nueva":"Nova entrada",
+        "Checklist":"Checklist entradas M.P.",
+        "Terminar":"Finalitzar",
+        "nextEntradaOpciones":"Entrada salvada, que vols fer?",
+        "Selecciona proveedor":"Selecciona proveïdor",
+        "Selecciona mp":"Selecciona m.p.",
+        "cantidad_inicial":"Quantitat",
+        "numlote_proveedor":"Lot proveïdor",
+        "albaran":"Albarà",
+        "fecha_caducidad":"Data caducitat",
+        "Selecciona medida":"Selecciona messura"
+
+    },
     "mCorrectivo":"Manteniment correctiu",
     "interno":"Intern",
     "externo":"Extern",

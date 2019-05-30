@@ -335,4 +335,8 @@ goCheckMCorrectivo(){
   this.cambiaEstado("CheckMCorrectivo")
   this.checkMantenimientoCorrectivo.emit('');
 }
+addServicioEntrada(ok){
+console.log(ok);
+this.cambiaEstado("serviciosEntrada")
+}
 }

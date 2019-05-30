@@ -102,6 +102,20 @@
       "valoracion":"Valoración",
       "fecha_valoracion":"Fecha valoración"
     },
+    "entradasMP":{
+        "Nueva":"Nueva entrada",
+        "Checklist":"Checklist entradas M.P.",
+        "Terminar":"Terminar",
+        "nextEntradaOpciones":"Entrada guardada, que quieres hacer?",
+        "Selecciona proveedor":"Selecciona proveedor",
+        "Selecciona mp":"Selecciona m.p.",
+        "cantidad_inicial":"Cantidad",
+        "numlote_proveedor":"Lote proveedor",
+        "albaran":"Albarán",
+        "fecha_caducidad":"Fecha caducidad",
+        "Selecciona medida":"Selecciona medida"
+
+    },
     "mCorrectivo":"Mantenimiento correctivo",
     "interno":"Interno",
     "externo":"Externo",

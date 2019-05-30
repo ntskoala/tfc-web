@@ -31,3 +31,8 @@
     border-radius: 5px;
     padding: 25px;
 }
+.alert{
+    color:red;
+    font-size: large;
+    font-weight: bold;
+}

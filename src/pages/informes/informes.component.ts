@@ -13,7 +13,7 @@ export class InformesComponent implements OnInit {
   public exportar_informes: boolean =false;
   public exportando:boolean=false;
   public innerHtml='';
-  public xls:boolean;
+  public xls:boolean=false;
   public pdf: boolean;
   public html;
   public progreso:number=0;
@@ -47,34 +47,36 @@ close(){
         let descargaPdf = respuesta.json()["urlPdf"]; 
         let id = respuesta.json()["id"]; 
         let time=0;
-      if (this.pdf){
-        this.innerHtml += 'Descarga Pdf...<br>';
+      //if (this.pdf){
+        this.innerHtml += '<br>Descarga Pdf...<br>';
         time=6000;
         let aPdf = document.createElement('a');
-        await this.downloadInforme(descargaPdf,aPdf,'aPdf')
+        this.downloadInforme(descargaPdf,aPdf,'aPdf').then(
+          (valor)=>{
+            setTimeout(()=>{this.deleteInformeOnDrive(url,id)},2500);
+          }
+        )
         this.pdf = false;
         if (!this.pdf && !this.xls) 
         setTimeout(()=>{this.onExit.emit('true')},5000);
-        }
-        if (this.xls){
-          this.innerHtml += 'Descarga Xls...<br>';
-          let aXls = document.createElement('a');
-          setTimeout(async()=>{
-          await  this.downloadInforme(descargaUrl,aXls,'aXls')
-          this.xls = false;
-                  if (!this.pdf && !this.xls) 
-                  this.onExit.emit('true');
-                },time)
-              }
-              let deleteFile={'accion':'delete','id':id}
-              let param2='?accion=delete&id='+id;
-              console.log(deleteFile);
-              this.servidor.getSimple(url,param2).subscribe(
-                (resultado)=>{
-                  console.log(resultado);
-                });
+        //}
+        // if (this.xls){
+        //   this.innerHtml += 'Descarga Xls...<br>';
+        //   let aXls = document.createElement('a');
+        //   setTimeout(async()=>{
+        //   await  this.downloadInforme(descargaUrl,aXls,'aXls')
+        //   this.xls = false;
+        //           if (!this.pdf && !this.xls) 
+        //           this.onExit.emit('true');
+        //         },time)
+        //       }
+        
+
         },
-        (error)=>{console.log('ERROR SCRIPTING ',error);},
+        (error)=>{
+          console.log('ERROR SCRIPTING ',error);
+          this.innerHtml += '<br><span class="alert">Se ha producido un error inesperado, cierra esta ventana y vuelve a intentarlo más tarde</span>';
+        },
         ()=>{
           this.progress(80);
         }
@@ -97,18 +99,28 @@ close(){
   }
 
   downloadInforme(file_path,a,id){
-
+return new Promise((resolve)=>{
     a.href = file_path;
     a.download = file_path.substr(file_path.lastIndexOf('/') + 1);
     a.id=id;
-    console.log(a,file_path);
+    console.log('INI DOWNLOAD',a,file_path);
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     this.innerHtml += 'descargado<br>';
     clearInterval(this.int);
     this.progreso=100;
-    return (true);
+    resolve (true);
+  });
   }
 
+  deleteInformeOnDrive(url,id){
+    let deleteFile={'accion':'delete','id':id}
+    let param2='?accion=delete&id='+id;
+    console.log('DELETING',deleteFile);
+    this.servidor.getSimple(url,param2).subscribe(
+      (resultado)=>{
+        console.log(resultado);
+      });
+  }
 }

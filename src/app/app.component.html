@@ -16,6 +16,7 @@
 
 
 <login class="login frame" *ngIf="status == 'Login'" (status)="cambiaEstado($event)"></login>
+<app-servicios-entrada  class="control frame" *ngIf="status == 'serviciosEntrada'"  (status)="cambiaEstado($event)" (checklistSeleccionado)="checklistSeleccionado($event)"></app-servicios-entrada>
 <page-home class="home frame" *ngIf="status == 'Home'" (status)="cambiaEstado($event)" (controlSeleccionado)="controlSeleccionado($event)" (checklistSeleccionado)="checklistSeleccionado($event)" (checkLimpiezaSeleccionado)="checkLimpiezaSeleccionado($event)" (checkMantenimientoSeleccionado)="checkMantenimientoSeleccionado($event)"></page-home>
 <page-control class="control frame" *ngIf="status == 'Control'" [currentControl]="control" (status)="cambiaEstado($event)"></page-control>
 <page-check class="check frame" *ngIf="status == 'Checklist'" [inputChecklist]="checklist" (status)="cambiaEstado($event)"></page-check>

@@ -7,6 +7,22 @@
 <mat-card>
        <mat-card-title>
        <strong>{{nombrechecklist}}</strong>
+      <div class="selectoEntradas"  *ngIf="entradaActual">
+          <button mat-mini-fab (click)="swipe('left',selector)">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+       <mat-form-field style="margin-left: 30px;margin-right: 30px; width: 300px">
+          <mat-label>Entradas:</mat-label>
+          <mat-select #selector (selectionChange)="entradaSelected($event)">
+            <mat-option *ngFor="let entrada of entradasMP" [value]="entrada.id" >
+                {{entrada.albaran}} {{entrada.numlote_proveedor}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-mini-fab (click)="swipe('right',selector)">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+      </div>
      </mat-card-title>
   <mat-list>
     

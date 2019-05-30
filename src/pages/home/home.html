@@ -9,7 +9,23 @@
     <mat-card-content>
 
 
-
+      <mat-expansion-panel [expanded]="false" *ngIf="1==1" (click)="addServicioEntrada('ok')">
+        <mat-expansion-panel-header> 
+              <mat-panel-title>
+                  <mat-icon>add_shopping_cart</mat-icon>
+                {{'ServiciosEntrada'|translate}}
+              </mat-panel-title> 
+               <mat-panel-description>
+               {{'serviciosEntradaDescription'|translate}} 
+              </mat-panel-description>
+            </mat-expansion-panel-header> 
+      </mat-expansion-panel>
+      <!-- <mat-list>
+          <mat-list-item><div  class="itemEntradas">
+              <mat-icon>add_shopping_cart</mat-icon>
+              Item 1
+            </div></mat-list-item>
+        </mat-list> -->
       <mat-expansion-panel [expanded]="miscontroles.length < 4" *ngIf="miscontroles.length > 0">
         <mat-expansion-panel-header> 
               <mat-panel-title>

@@ -25,3 +25,48 @@
   .elem{
     margin-left:15px;
 }
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+  }
+  
+  .modal-window-Alert {
+    width: 500px;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.6);
+    border: 4px solid #f44336;
+    background-color: #fff;
+    border-radius: 5px;
+    transform: translate(-50%, -50%);
+    padding: 25px;
+  }
+  .modalWindow{
+    background: #fff;
+    border: 2px solid #fbc02d;
+    width:800px;
+    min-height: 500px;
+    margin: auto;
+    padding: 40px;
+    margin-top: 20px;
+  }
+  .modalWindowOpciones{
+    background: #fff;
+    border: 2px solid #fbc02d;
+    width: 300px;
+    min-height: 200px;
+    margin: auto;
+    padding: 40px;
+    margin-top: calc(50vh - 120px);
+  }
+
+  .fecha .mat-form-field-label-wrapper   {
+    top: 0px;
+}

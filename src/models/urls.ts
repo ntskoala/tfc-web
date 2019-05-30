@@ -33,3 +33,13 @@ export const URLS = {
   UPLOAD_DOCS: base + 'uploads.php'
 
 }
+
+
+let medidas;
+if (localStorage.getItem("idioma")=='es'){
+medidas = [{'label':'Kg.','value':'Kg.'},{'label':'g.','value':'g.'},{'label':'l.','value':'l.'},{'label':'ml.','value':'ml.'},{'label':'unidades','value':'unidades'}];
+}
+if (localStorage.getItem("idioma")=='cat'){
+medidas = [{'label':'Kg.','value':'Kg.'},{'label':'g.','value':'g.'},{'label':'l.','value':'l.'},{'label':'ml.','value':'ml.'},{'label':'unitats','value':'unidades'}];
+}
+export const dropDownMedidas=medidas;

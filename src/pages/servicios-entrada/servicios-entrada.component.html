@@ -1,0 +1,80 @@
+
+<div class="modal" *ngIf="nextOption">
+<div class="modalWindowOpciones">
+  {{'entradasMP.nextEntradaOpciones' | translate}}
+
+  <mat-list role="list">
+      <mat-list-item role="listitem">
+          <button mat-stroked-button color="primary"  (click)="doNext('nueva')" style="width: 190px;">{{'entradasMP.Nueva' | translate}}</button>
+        </mat-list-item>
+
+      <mat-list-item role="listitem" *ngIf="hayTrigger">
+          <button mat-stroked-button color="primary" (click)="doNext('check')" style="width: 190px;">{{'entradasMP.Checklist' | translate}}</button>
+      </mat-list-item>
+      
+      <mat-list-item role="listitem" >
+          <button mat-stroked-button color="primary" (click)="doNext('fin')" style="width: 190px;"> {{'entradasMP.Terminar' | translate}}</button>
+       
+      </mat-list-item>
+    </mat-list>
+</div>
+</div>
+
+
+
+<div class="content" padding>
+    <form  [formGroup]="checkForm" (ngSubmit)="terminar(checkForm.value)">
+  <mat-card>
+         <mat-card-title>
+         <strong>{{'serviciosEntrada' | translate}}</strong>
+       </mat-card-title>
+  
+       <mat-form-field class="campo">
+          <input matInput type="text"  formControlName="albaran"  placeholder="{{'entradasMP.albaran' | translate}}">
+        </mat-form-field>
+
+  
+       <mat-form-field  class="campo">
+        <mat-select required placeholder="{{'Selecciona proveedor' | translate}}" (selectionChange)="getProductos($event.value)" formControlName="idproveedor">
+            <!-- <mat-option value="null">Maquinas</mat-option> -->
+          <mat-option *ngFor="let proveedor of proveedores" [value]="proveedor.id">{{proveedor.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+  
+      <mat-form-field class="campo">
+        <mat-select required placeholder="{{'Selecciona mp' | translate}}"  formControlName="idproducto">
+          <mat-option *ngFor="let producto of productos" [value]="producto.id">{{producto.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="campo">
+          <input matInput type="text"  formControlName="numlote_proveedor"  placeholder="{{'entradasMP.numlote_proveedor' | translate}}">
+        </mat-form-field>
+  
+      <mat-form-field class="campo">
+        <input matInput type="number"  formControlName="cantidad_inicial"  placeholder="{{'entradasMP.cantidad_inicial' | translate}}">
+      </mat-form-field>
+  
+  
+        <!-- <div class="example-container"> -->
+            <mat-form-field class="campo fecha">
+                <input style="width:140px" placeholder="{{'entradasMP.fecha_caducidad' | translate}}"  matInput formControlName="fecha_caducidad" [matDatepicker]="picker">
+                <mat-datepicker-toggle mdSuffix [for]="picker">
+                    <!-- <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon> -->
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker ></mat-datepicker>
+              </mat-form-field> 
+
+              <mat-form-field class="campo">
+                  <mat-select required placeholder="{{'Selecciona medida' | translate}}"  formControlName="tipo_medida">
+                    <mat-option *ngFor="let medida of medidas" [value]="medida.label">{{medida.label}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+        <!-- </div> -->
+  <hr>   
+  <button  [disabled]="!checkForm.valid" mat-raised-button  color="accent" type="submit"   style="width: 30%;">{{"terminar" | translate}}</button>
+  <button mat-raised-button  color="warn" (click)="cancelar()" style="width: 30%;">{{"cancelar" | translate}}</button>
+  </mat-card>
+  </form>
+  </div>
