@@ -43,7 +43,6 @@ export class ServiciosEntradaComponent implements OnInit {
   ngOnInit() {
     this.hayTriggerServiciosEntrada();
     this.getProveedores();
-
   }
 
 
@@ -127,16 +126,17 @@ export class ServiciosEntradaComponent implements OnInit {
       console.log(this.nuevaEntradaMP);
       
                 let param = "&entidad=proveedores_entradas_producto"+"&idempresa="+this.empresasService.usuarioactivo.idempresa+"&userId="+this.empresasService.usuarioactivo.id;
-                // this.servidor.postObject(URLS.STD_ITEM, this.nuevaEntradaMP,param).subscribe(
-                //   response => {
-                //     if (response.success) {
-                //       console.log('Materia prima sended', response.id);
-                //      //this.status.emit('Home');
+                this.servidor.postObject(URLS.STD_ITEM, this.nuevaEntradaMP,param).subscribe(
+                  response => {
+                    if (response.success) {
+                      console.log('Materia prima sended', response.id);
+                      this.nuevaEntradaMP.id=response.id;
+                     //this.status.emit('Home');
                       this.next();
-                //     }
-                //   },
-                //   error => console.log(error),
-                //   () => { });
+                    }
+                  },
+                  error => console.log(error),
+                  () => { });
     }
 
     next(){

@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {MatSelect} from '@angular/material/select';
+
 import {TranslateService} from '@ngx-translate/core';
 
 import * as moment from 'moment';
@@ -45,6 +47,7 @@ export class CheckPage implements OnInit{
 @Input() inputChecklist: Object;
 public currentChecklist: ControlChecklist[];
 public checklistcontroles: Checks[] = [];
+
 public resultadoschecklistcontroles: any;
 public checks: any;
 //private storage: Storage;
@@ -70,11 +73,15 @@ public currentIndexIncidencia:number;
 public isActualChecklistComplete=false;
 public entradasMP: any[] = [];
 public entradaActual:any=null;
+public albaranActual:any=null;
+public albaranes: any[] = [];
 public productos: any[]=[];
 public proveedores: any[]=[];
 public proveedor:string;
 public producto:string;
 
+public opcionesCheck:any[]=[{'value':'todosOk','label':'todosOk'},{'value':'true','label':'correcto'},{'value':'false','label':'incorrecto'},{'value':'na','label':'no aplica'},{'value':'valor','label':'Valor'}];
+public CustomOpciones:String[]=['Selecciona'];
 
 
   constructor(private translate: TranslateService, public sync: Sync, public servidor: Servidor,
@@ -86,13 +93,19 @@ public producto:string;
   }
 
   ngOnInit() {
-    if(this.inputChecklist['idchecklist']==localStorage.getItem('triggerEntradasMP')){
-      console.log('****CHECKLIST FROM ENTRDAS',this.inputChecklist);
+    console.log(this.inputChecklist['idchecklist'],localStorage.getItem('triggerEntradasMP'))
+    console.log(this.inputChecklist['idchecklist']==localStorage.getItem('triggerEntradasMP'))
+
+    if(this.inputChecklist['idchecklist']==localStorage.getItem('triggerEntradasMP') 
+    && localStorage.getItem('triggerEntradasMP') && this.inputChecklist['idchecklist']){
+      this.idchecklist=this.inputChecklist['idchecklist'];
+      console.log('****CHECKLIST FROM ENTRADAS',this.inputChecklist);
       this.getChecklist(this.inputChecklist['idchecklist']);
       this.getControlesChecklist(this.inputChecklist['idchecklist']);
       this.nombrechecklist = localStorage.getItem('nombreEntradasMP');
       this.periodicidad = {'repeticion':'por uso'};
     }else{
+      this.idchecklist=this.inputChecklist["checklist"].id
   this.currentChecklist = this.inputChecklist["controles"];
   this.nombrechecklist = this.inputChecklist["checklist"].nombrechecklist;
   this.fecha_prevista = moment(this.inputChecklist["checklist"].fecha_).toDate();
@@ -122,11 +135,11 @@ public producto:string;
       }                    
 
     });
-    console.log("input",this.inputChecklist);
-    if(this.inputChecklist['idchecklist']==localStorage.getItem('triggerEntradasMP') || this.inputChecklist['checklist'].id==localStorage.getItem('triggerEntradasMP') ){
-      this.getProveedores();
-      this.getEntradasPendientes();
-    }
+  }
+  console.log("input",this.inputChecklist);
+  if(this.inputChecklist['idchecklist']==localStorage.getItem('triggerEntradasMP') || this.inputChecklist['checklist'].id==localStorage.getItem('triggerEntradasMP') ){
+    // this.getProveedores();
+    this.getEntradasPendientes();
   }
   }
   getChecklist(idChecklist){
@@ -145,7 +158,7 @@ public producto:string;
     ); 
   }
   getControlesChecklist(idChecklist){
-    let param = "&entidad=controlchecklist"+"&field=idchecklist&idItem="+idChecklist;
+    let param = "&entidad=controlchecklist"+"&field=idchecklist&idItem="+idChecklist+"&order=orden";
     this.servidor.getObjects(URLS.STD_SUBITEM,param).subscribe(
       (response)=>{
         this.checklistcontroles=[];
@@ -183,16 +196,31 @@ public producto:string;
     this.terminar2(valor);
     }
   }
+
   terminar(){
-    if(this.periodos.hayRetraso(this.fecha_prevista,this.periodicidad)){
-        if (this.askCompletarFechas) this.askCompletarFechas =false;
-        this.askCompletarFechas=true;  
-      }else{ 
-        this.terminar2();
-      }
+    // if(this.periodos.hayRetraso(this.fecha_prevista,this.periodicidad)){
+    //     if (this.askCompletarFechas) this.askCompletarFechas =false;
+    //     this.askCompletarFechas=true;  
+    //   }else{ 
+    //     this.terminar2();
+    //   }
+    if(this.idchecklist==localStorage.getItem('triggerEntradasMP')){
+      console.log('####',this.albaranes);
+      this.albaranes.forEach((albaran)=>{
+        console.log('***',albaran,albaran['isChecklistComplete']);
+        if(albaran['isChecklistComplete']){
+          this.terminar2(false,albaran['albaran'])
+        }
+      })
+    }else{
+    this.terminar2();
+    }
     }
 
-terminar2(completaFechas?: boolean){
+
+
+terminar2(completaFechas?: boolean,albaran?){
+  console.log("control1",albaran);
 this.desactivado = true;
   let empresa = this.empresasService.usuarioactivo.idempresa;
   //let fecha = new Date();
@@ -209,20 +237,26 @@ this.desactivado = true;
       this.saveChecklist(resultados[x],empresa);
     }
     }else{
+      console.log("control2",albaran,this.idchecklist,localStorage.getItem('triggerEntradasMP'));
   let resultado = { "idlocal": 0, "idchecklist": this.checklistcontroles[0].idchecklist, "fecha": moment().format('YYYY-MM-DD') + ' ' + moment().format('HH:mm'), "foto": this.base64Image,"idusuario":this.empresasService.usuarioactivo.id };
   resultados.push(resultado);
-  this.saveChecklist(resultados[0],empresa);
+  this.saveChecklist(resultados[0],empresa,albaran);
     }
   // let idrespuesta = this.sync.setResultados(JSON.stringify(resultados), "resultadoschecklist", empresa)
   //   .subscribe(data => {
   //     this.sendChecklistControles(data.id, idlocal);
   //   });
 }
-saveChecklist(resultado,empresa){
+
+saveChecklist(resultado,empresa,albaran?){
+  console.log("control3",albaran,this.idchecklist,localStorage.getItem('triggerEntradasMP'));
   let Aresultado: any[]= [resultado];
   let idrespuesta = this.sync.setResultados(JSON.stringify(Aresultado), "resultadoschecklist", empresa)
   .subscribe(data => {
     this.sendChecklistControles(data.id, 0);
+    if(this.idchecklist==localStorage.getItem('triggerEntradasMP')){
+    this.updateEntregas(data.id,albaran)
+    }
   }); 
 }
 sendChecklistControles(id,idlocal){
@@ -308,28 +342,60 @@ editar(control){
 }
 
 
-  opciones(control) {
-    console.log("check",control);
-    // let actionSheet = this.actionSheetCtrl.create({
-    //   title: 'Opciones',
-    //   buttons: [
-    //     {text: 'Editar descripción',handler: () => {this.editar(control);}},
-    //     {text: 'Foto',handler: () => {this.takeFoto(control);}},
-    //     {text: 'Cancel',role: 'cancel',handler: () => {console.log('Cancel clicked');}}
-    //     ]
-    //      });
-    // actionSheet.present();
+  // opciones(control) {
+  //   console.log("check",control);
+  //   // let actionSheet = this.actionSheetCtrl.create({
+  //   //   title: 'Opciones',
+  //   //   buttons: [
+  //   //     {text: 'Editar descripción',handler: () => {this.editar(control);}},
+  //   //     {text: 'Foto',handler: () => {this.takeFoto(control);}},
+  //   //     {text: 'Cancel',role: 'cancel',handler: () => {console.log('Cancel clicked');}}
+  //   //     ]
+  //   //      });
+  //   // actionSheet.present();
+  // }
+  isCustom(resultado){
+    console.log(resultado);
+    let result = false;
+    let indice = this.CustomOpciones.findIndex((opcion)=>opcion ==resultado)
+    if (indice >=0) result = true;
+    console.log(indice,result);
+    return result;
+  }
+  setOpciones(nombrecontrol){
+    console.log(nombrecontrol);
+    if (nombrecontrol.indexOf('//')>0){
+      this.CustomOpciones=nombrecontrol.split('//');
+      console.log(this.CustomOpciones);
+    }else{
+      this.opcionesCheck= [{'value':'todosOk','label':'todosOk'},{'value':'true','label':'correcto'},{'value':'false','label':'incorrecto'},{'value':'na','label':'no aplica'},{'value':'valor','label':'Valor'}]
+            }
+  }
+changeSelected(valor,i,control1){
+  console.log(valor.value,this.albaranActual);
+  // if(valor=='incidencia')
+  // {
+  //   this.currentIndexIncidencia = index;
+  // }
+  let index=this.albaranes.findIndex((albaran)=>albaran['albaran']==this.albaranActual)
+  if(valor.value=='todosOk'){
+    this.todosOk(index);
+  }else{
+    if(control1.valor)control1.valor=valor.value;
   }
 
-changeSelected(valor,index){
-  console.log(valor)
-  if(valor=='incidencia')
-  {
-    this.currentIndexIncidencia = index;
-  }
-  
   this.selectedValue = this.checkvalue;
 }
+
+
+todosOk(index){
+  this.checklistcontroles.forEach((control)=>{
+    control.checked='true';
+  });
+  this.albaranes[index]["isChecklistComplete"]= true;
+  this.isActualChecklistComplete=true;
+}
+
 
 nuevaIncidencia(nuevaIncidenciaCreada,i){
   this.incidencias[i] = nuevaIncidenciaCreada;
@@ -385,9 +451,10 @@ getEntradasPendientes(){
     this.servidor.getObjects(URLS.STD_ITEM,param).subscribe(
       response => {
         if (response.success) {
+          this.entradasMP = [];
+          this.albaranes=[];
           console.log('servicio de entrada ok',response.data);
           let entradas = response.data;
-          console.log('resultado entradas: ' + entradas);
           //this.source='server';
             entradas.forEach (entrada => {
             //  this.saveLimpiezaRealizada(limpiezarealizada)
@@ -406,13 +473,32 @@ getEntradasPendientes(){
               "idResultadoChecklist":entrada.idResultadoChecklist,
               "albaran":entrada.albaran,
               // "checklist":true,
-              "checklistControles":this.setTemplateControles(),
-              "imagen":null
         });
+          let indiceAlabaran = this.albaranes.findIndex((albaran)=>albaran['albaran']==entrada.albaran);
+            if (indiceAlabaran == -1) {
+              this.albaranes.push({
+                'albaran':entrada.albaran,
+                'entradas':1,
+                "checklistControles":this.setTemplateControles(),
+                "imagen":null,
+                "isChecklistComplete":false
+              });
+            }else{
+              this.albaranes[indiceAlabaran]['entradas']= this.albaranes[indiceAlabaran]['entradas']+1;
+            }
             });
+            //console.log('INPUT ENTRADA: ' + this.inputChecklist['lote'].albaran);
+            if (this.inputChecklist['lote']){
+            if(this.inputChecklist['lote'].id>0){
+              console.log('INPUT ENTRADA: ' + this.inputChecklist['lote'].albaran);
+              console.log('INPUT ENTRADA 1: ');
+              this.entradaSelected({'value':this.inputChecklist['lote'].albaran});
+            }
+            }else{
+              console.log('INPUT ENTRADA 2: ');
             if (this.entradasMP.length > 0)
             setTimeout(()=>{this.setLote(0)},700);
-
+          }
             // this.getProveedores()
             // this.getProductos(this.entradasMP[0].idproducto,this.entradasMP[0].idproveedor)
             // this.entradaActual=this.entradasMP[0];
@@ -437,83 +523,101 @@ setLoteActivo(swiper, evento){
 }
 
 setLote(index){
-this.entradaActual = this.entradasMP[index];
-this.proveedor=this.productos[this.proveedores.findIndex((proveedor)=>proveedor.id==this.entradasMP[index].idproveedor)].nombre
-this.producto=this.productos[this.productos.findIndex((producto)=>producto.id==this.entradasMP[index].idproducto)].nombre
+  console.log(index);
+this.entradaActual = this.albaranes[index];
+console.log(this.entradaActual);
+// this.proveedor=this.productos[this.proveedores.findIndex((proveedor)=>proveedor.id==this.entradasMP[index].idproveedor)].nombre
+// this.producto=this.productos[this.productos.findIndex((producto)=>producto.id==this.entradasMP[index].idproducto)].nombre
 
 
       //this.servidor.setIdEntrada({'id':this.entradaActual.id,'source':this.source,'albaran':this.entradaActual.albaran});
 //this.albaran = this.servicios[this.servicios.findIndex((servicio)=>servicio.idEntrada == this.entradasMP[index].id)]['albaran'];
   this.checklistcontroles=this.entradaActual['checklistControles'];
   this.base64Image=this.entradaActual['imagen'];
-this.checkControles();
+this.checkControles(index);
 }
 
 
-checkControles(){
-  console.log('checkControles',this.isActualChecklistComplete);
+checkControles(indice){
+  //console.log('checkControles',this.isActualChecklistComplete);
   this.isActualChecklistComplete=true;
+  
   this.checklistcontroles.forEach((control)=>{
       if (control.checked == '') this.isActualChecklistComplete=false;
   });
   console.log(this.isActualChecklistComplete);
+  
 
 }
+Render(selector:MatSelect){
+  console.log('RENDERING???',this.albaranActual);
 
+  this.albaranes=this.albaranes.slice(0);
+  selector.ngDoCheck()
+}
 updateEntrada(){
 }
 
 
 
-getProveedores(){
-  let parametros = '&idempresa=' + this.empresasService.seleccionada+"&entidad=proveedores"; 
-  this.servidor.getObjects(URLS.STD_ITEM, parametros).subscribe(
-    response => {
-      let valores = '';
-      this.proveedores=[];
-      this.productos=[];
-      //this.proveedores.push({"id":0,"nombre":"selecciona"});
-      if (response.success && response.data) {
-        for (let element of response.data) { 
-            this.proveedores.push({"id":element.id,"nombre":element.nombre}); 
-            this.getProductos(element.id);
-       }
-}
-},
-  error=>console.log(error),
-  ()=>{}
-  ); 
-}
+// getProveedores(){
+//   let parametros = '&idempresa=' + this.empresasService.seleccionada+"&entidad=proveedores"; 
+//   this.servidor.getObjects(URLS.STD_ITEM, parametros).subscribe(
+//     response => {
+//       let valores = '';
+//       this.proveedores=[];
+//       this.productos=[];
+//       //this.proveedores.push({"id":0,"nombre":"selecciona"});
+//       if (response.success && response.data) {
+//         for (let element of response.data) { 
+//             this.proveedores.push({"id":element.id,"nombre":element.nombre}); 
+//             this.getProductos(element.id);
+//        }
+// }
+// },
+//   error=>console.log(error),
+//   ()=>{}
+//   ); 
+// }
 
-getProductos(idProveedor){
-  console.log(idProveedor)
-  let param = "&entidad=proveedores_productos"+"&field=idproveedor&idItem="+idProveedor;
-  this.servidor.getObjects(URLS.STD_SUBITEM, param).subscribe(
-    response => {
-      //this.proveedores.push({"id":0,"nombre":"selecciona"});
-      if (response.success && response.data) {
-        for (let element of response.data) { 
-            this.productos.push({"id":element.id,"nombre":element.nombre});
-       }
-}
-},
-  error=>console.log(error),
-  ()=>{}
-  );    
+// getProductos(idProveedor){
+//   console.log(idProveedor)
+//   let param = "&entidad=proveedores_productos"+"&field=idproveedor&idItem="+idProveedor;
+//   this.servidor.getObjects(URLS.STD_SUBITEM, param).subscribe(
+//     response => {
+//       //this.proveedores.push({"id":0,"nombre":"selecciona"});
+//       if (response.success && response.data) {
+//         for (let element of response.data) { 
+//             this.productos.push({"id":element.id,"nombre":element.nombre});
+//        }
+// }
+// },
+//   error=>console.log(error),
+//   ()=>{}
+//   );    
 
-}
+// }
 
 entradaSelected(event){
 console.log(event.value);
-let idEntrada=event.value;
-let indice= this.entradasMP.findIndex((entrada)=>entrada.id==idEntrada);
+this.albaranActual=event.value;
+let albaranSelected=event.value;
+let indice= this.albaranes.findIndex((albaran)=>albaran.albaran==albaranSelected);
 this.setLote(indice);
 }
 
-swipe(direccion,selector){
+swipe(direccion,selector:MatSelect){
 console.log(direccion,selector)
-let indice= this.entradasMP.findIndex((entrada)=>entrada.id==selector.value);
-
+let indice= this.albaranes.findIndex((albaran)=>albaran.albaran==selector.value);
+if (direccion == 'left'){
+  (indice<=0)? indice=0: indice--;
+}else{
+  (indice>=this.albaranes.length-1)? indice=this.albaranes.length-1: indice++;
+}
+selector.value=this.albaranes[indice]['albaran'];
+this.albaranActual=this.albaranes[indice]['albaran'];
+console.log(indice,this.albaranes[indice])
+this.setLote(indice);
 }
 
 setTemplateControles(){
@@ -534,7 +638,22 @@ setTemplateControles(){
   return newArrayControles;
 }
 
+updateEntregas(idResultadoChecklist,albaran){
+  let lotesEntradasAlbaran= this.entradasMP.filter((entrada)=>entrada.albaran==albaran);
+lotesEntradasAlbaran.forEach((entrada)=>{
+  let param = "?entidad=proveedores_entradas_producto&t&id="+entrada.id+"&idempresa="+this.empresasService.usuarioactivo.idempresa+"&userId="+this.empresasService.usuarioactivo.id;
+  let resultadoChecklist={idResultadoChecklist:idResultadoChecklist};
+   this.servidor.putObject(URLS.STD_ITEM,param,resultadoChecklist).subscribe(
+   (resultado)=>{
+    this.status.emit('Home');
+     console.log(resultado)}
+     ,
+   (error)=>console.log(error),
+   ()=>console.log('fin updating fecha')
+ );
+   });
 
+}
 
 }
 

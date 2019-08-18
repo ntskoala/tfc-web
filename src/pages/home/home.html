@@ -9,14 +9,15 @@
     <mat-card-content>
 
 
-      <mat-expansion-panel [expanded]="false" *ngIf="1==1" (click)="addServicioEntrada('ok')">
+      <mat-expansion-panel [expanded]="false" *ngIf="hayProveedores" (click)="addServicioEntrada('ok')">
         <mat-expansion-panel-header> 
               <mat-panel-title>
                   <mat-icon>add_shopping_cart</mat-icon>
-                {{'ServiciosEntrada'|translate}}
+                {{'menu.ServiciosEntrada'|translate}}
               </mat-panel-title> 
                <mat-panel-description>
-               {{'serviciosEntradaDescription'|translate}} 
+                  {{'menu.ServiciosEntrada'|translate}}
+               <!-- {{'manu.serviciosEntradaDescription'|translate}}  -->
               </mat-panel-description>
             </mat-expansion-panel-header> 
       </mat-expansion-panel>
@@ -40,9 +41,12 @@
 
    <mat-list *ngFor="let control of miscontroles">
     <mat-list-item (click)="goControl(control)">
-        <span class="elem" [ngClass]="{'onDate':!control.isbeforedate,'beforeOnDate':control.isbeforedate,'porUso':control.frecuencia == 'por uso'}">             
-      {{control.nombre}} {{control.pla}}
-        </span>
+        <div class="elem" [ngClass]="{'onDate':!control.isbeforedate,'beforeOnDate':control.isbeforedate,'porUso':control.frecuencia == 'por uso'}">             
+      {{control.nombre}} {{control.pla}} 
+        </div>
+        <div class="dateOld beforeOnDate" *ngIf="control.isbeforedate && control.frecuencia != 'por uso'"> 
+          {{control.fecha_ | date:"dd-MM-yyyy"}}
+        </div>
       <img mat-list-avatar src="assets/img/temp.png" height="25px">
     </mat-list-item>
    </mat-list>
@@ -65,7 +69,10 @@
           <span class="elem" [ngClass]="{'onDate':!check.isbeforedate,'beforeOnDate':check.isbeforedate,'porUso':check.frecuencia == 'por uso'}"> 
             {{check.nombrechecklist}}
           </span>
-        
+          <div class="dateOld beforeOnDate" *ngIf="check.isbeforedate && check.frecuencia != 'por uso'"> 
+              {{check.fecha_ | date:"dd-MM-yyyy"}}
+            </div>
+
         <!-- {{check.nombrechecklist}} -->
       <img mat-list-avatar src="assets/img/checks.jpg" height="25px">
     </mat-list-item>
@@ -89,6 +96,7 @@
           <span class="elem">               
               {{limpieza.nombreLimpieza}}
           </span>
+
       <img mat-list-avatar src="assets/img/clean.png" height="25px">
     </mat-list-item>
    </mat-list>   
@@ -120,13 +128,13 @@
           <span class="elem" [ngClass]="{'onDate':!mantenimiento.isbeforedate,'beforeOnDate':mantenimiento.isbeforedate}">               
         {{mantenimiento.nombreMaquina}} {{mantenimiento.nombreMantenimiento}}
           </span>
+          <div class="dateOld beforeOnDate" *ngIf="mantenimiento.isbeforedate"> 
+              {{mantenimiento.fecha_prevista | date:"dd-MM-yyyy"}}
+            </div>
       <img mat-list-avatar src="assets/img/machine3.png" height="25px">
     </mat-list-item>
    </mat-list>  
   </mat-expansion-panel>
-
-
-
 
 
           <mat-expansion-panel [expanded]="calibraciones.length < 4"  *ngIf="calibraciones.length > 0">
@@ -145,6 +153,9 @@
           <span class="elem" [ngClass]="{'onDate':!calibracion.isbeforedate,'beforeOnDate':calibracion.isbeforedate}">               
         {{calibracion.nombreMaquina}} {{calibracion.nombreMantenimiento}}
           </span>
+          <div class="dateOld beforeOnDate" *ngIf="calibracion.isbeforedate"> 
+              {{calibracion.fecha_prevista | date:"dd-MM-yyyy"}}
+            </div>
       <img mat-list-avatar src="assets/img/balance3.png" height="25px">
     </mat-list-item>
    </mat-list>  

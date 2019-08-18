@@ -6,16 +6,24 @@
   <form  #checkForm="ngForm">
 <mat-card>
        <mat-card-title>
-       <strong>{{nombrechecklist}}</strong>
+       <strong>{{nombrechecklist}}</strong> 
       <div class="selectoEntradas"  *ngIf="entradaActual">
           <button mat-mini-fab (click)="swipe('left',selector)">
               <mat-icon>chevron_left</mat-icon>
             </button>
        <mat-form-field style="margin-left: 30px;margin-right: 30px; width: 300px">
-          <mat-label>Entradas:</mat-label>
-          <mat-select #selector (selectionChange)="entradaSelected($event)">
-            <mat-option *ngFor="let entrada of entradasMP" [value]="entrada.id" >
-                {{entrada.albaran}} {{entrada.numlote_proveedor}}
+          <mat-label>
+            Albaranes:
+          </mat-label>
+
+          <div style="margin-left:-15px" [ngClass]="{'boliche':true,'isOk':isActualChecklistComplete,'isNotOk':!isActualChecklistComplete}"></div> 
+          
+          <mat-select #selector (selectionChange)="entradaSelected($event)" (openedChange)="Render(selector)" [(ngModel)]="albaranActual" [ngModelOptions]="{standalone: true}">
+
+            <mat-option *ngFor="let albaran of albaranes" [value]="albaran['albaran']">
+                <div [ngClass]="{'boliche':true,'isOk':albaran['isChecklistComplete'],'isNotOk':!albaran['isChecklistComplete']}"></div> 
+                  {{albaran['albaran']}}: {{albaran['entradas']}} entradas.
+   
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -42,14 +50,22 @@
     <input matInput  style="margin-left:10px" name="descripcion{{i}}" [(ngModel)]="control.descripcion" placeholder="{{'descripcion' | translate}}" />
   </mat-form-field>
   <!-- </mat-form-field> -->
- <mat-select class="select" placeholder=""  name="checked{{i}}"  [(ngModel)]="control.checked" (selectionChange)="changeSelected($event,i)">
+ <mat-select class="select" placeholder=""  name="checked{{i}}"  [(ngModel)]="control.checked" (openedChange)="setOpciones(control.nombrecontrol)" (selectionChange)="changeSelected($event,i,control)">
+    <span *ngIf="control.nombrecontrol.indexOf('/')<0">
+        <mat-option   [value]="opcion.value" *ngFor="let opcion of opcionesCheck">{{opcion.label | translate}}</mat-option>
+      </span>
+      <span *ngIf="control.nombrecontrol.indexOf('/')>0">
+        <mat-option [value]="control.checked" >{{control.checked}}</mat-option>
+        <mat-option [value]="opt" *ngFor="let opt of CustomOpciones">{{opt | translate}}</mat-option>
+      </span>
+    <!-- <mat-option  value="todosOk">{{"todosOk" | translate}}</mat-option>
     <mat-option  value="true">{{"correcto" | translate}}</mat-option>
     <mat-option  value="false">{{"incorrecto" | translate}}</mat-option>
     <mat-option  value="na">{{"no aplica" | translate}}</mat-option>
-    <mat-option  value="valor">{{"Valor" | translate}}</mat-option>
+    <mat-option  value="valor">{{"Valor" | translate}}</mat-option> -->
     <!-- <mat-option  value="incidencia">{{"Crea incidencia" | translate}}</mat-option> -->
   </mat-select>
-  <mat-form-field *ngIf="control.checked !== 'true' && control.checked !== 'false'  && control.checked !== 'na'">   
+  <mat-form-field *ngIf="control.checked !== 'true' && control.checked !== 'false'  && control.checked !== 'na' && !isCustom(control.checked)">   
     <input matInput required class="valor"  name="valor{{i}}"  color="accent" [(ngModel)]="control.valor" (change)="changeValor(control)">
   </mat-form-field>
   </div>

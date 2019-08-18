@@ -7,7 +7,8 @@
         "checklist": "Checklist",
         "sync": "sincronización",
         "login": "Login",
-        "config": "Configuración"
+        "config": "Configuración",
+        "ServiciosEntrada":"Recepción M.P."
     },
     "alertas": {
         "error": "Error",

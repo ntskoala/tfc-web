@@ -7,7 +7,8 @@
         "checklist": "Checklist",
         "sync": "sincronització",
         "login": "Login",
-        "config": "Configuració"
+        "config": "Configuració",
+        "ServiciosEntrada":"Recepció M.P."
     },
     "alertas": {
         "error": "Error",
@@ -47,13 +48,13 @@
         "titulo": "Empresa",
         "texto": "Introdueix el codi d'empresa per començar a usar l'app",
         "codigo": "Còdi",
-        "cancel": "Cancel·lar",
+        "cancel": "Cancel·la",
         "ok":"Acceptar",
         "errorcodigo": "Error de còdi!"
     },
     "por uso": "Per ús",
-    "cancelar":"Cancel·lar",
-    "guardar":"Desar",
+    "cancelar":"Cancel·la",
+    "guardar":"Desa",
     "asistencia": "Asistencia",
     "control": "control",
     "checklist": "checklist",

@@ -9,7 +9,9 @@ import { map } from 'rxjs/operators';
 import { Sync } from '../../providers/sync';
 // import { Initdb } from '../../providers/initdb';
 import {EmpresasService} from '../../providers/empresas.service'
+import {Servidor} from '../../providers/servidor.service'
 
+import {URLS} from '../../models/urls';
 import {Usuario} from '../../models/usuario';
 import {Control} from '../../models/control';
 import {Checklist} from '../../models/checklist';
@@ -19,9 +21,11 @@ import {ControlChecklist} from '../../models/controlchecklist';
 import * as moment from 'moment';
 
 
+
 @Component({
   selector: 'page-home',
-  templateUrl: './home.html'
+  templateUrl: './home.html',
+  styleUrls:['./home.scss']
 })
 export class HomePage implements OnInit {
 // @Input() elemento: string;
@@ -47,7 +51,13 @@ controlesLimpiezas: checkLimpieza[]=[];
 public logoempresa;
 empresa;
 hoy: Date = new Date();
-  constructor(private sync: Sync, public empresasService: EmpresasService) {
+public hayTrigger:boolean=false;
+public hayProveedores:boolean=false;
+
+  constructor(
+    private sync: Sync, 
+    public empresasService: EmpresasService,
+    public servidor:Servidor) {
 
 }
 
@@ -60,6 +70,7 @@ ngOnInit(){
   if (this.empresasService.usuarioactivo){
  this.refreshlogo();
  this.sincronizate();
+ this.hayTriggerServiciosEntrada();
   }else{
     //console.log('No USER');
     this.cambiaEstado('Login');
@@ -228,7 +239,7 @@ sincronizate(){
             }
           }
       },
-    err => console.error(err),
+    err => console.log("ERROR MANTENIMIENTOS",err),
     () => {}
     //console.log('getMantenimientos completed')
 );
@@ -265,7 +276,7 @@ sincronizate(){
             }
           }
       },
-    err => console.error(err),
+    err => console.log("ERROR CALIBRACIONES",err),
     () => {}
     //console.log('getMantenimientos completed')
 );
@@ -278,6 +289,51 @@ sincronizate(){
 // //id , idlimpiezazona ,idusuario , nombrelimpieza , idelemento , nombreelementol , fecha , tipo , periodicidad , productos , protocolo
 //                         this.checkLimpiezas.push(new checkLimpieza(data.rows.item(index).id,data.rows.item(index).idlimpiezazona,data.rows.item(index).nombrelimpieza,data.rows.item(index).idelemento,
 //                         data.rows.item(index).nombreelementol,data.rows.item(index).fecha,data.rows.item(index).tipo,data.rows.item(index).periodicidad,data.rows.item(index).productos,data.rows.item(index).protocolo,false,data.rows.item(index).idusuario,data.rows.item(index).responsable,repeticion,isbeforedate));
+
+hayTriggerServiciosEntrada(){
+  //let where= encodeURI("entidadOrigen=\'proveedores_entradas_producto\' AND entidadDestino=\'checklist\'");
+    let parametros = '&idempresa=' + this.empresasService.seleccionada+"&entidad=triggers";
+      this.servidor.getObjects(URLS.STD_ITEM, parametros).subscribe(
+        response => {
+          console.log(response);
+          if (response.success == 'true' && response.data) {
+            console.log(response.data,response.data.length)
+
+            for (let element of response.data) {
+              if (element.entidadOrigen == 'proveedores_entradas_producto' && element.entidadDestino=='checklist'){
+                this.hayTrigger=true;
+                localStorage.setItem('triggerEntradasMP',element.idDestino);
+              }
+              }
+          }
+      },
+  error =>{
+      console.debug(error);
+      console.log('hay Trigger servicios entrada' + error);
+      },
+      ()=>{});
+
+
+      let param = '&idempresa=' + this.empresasService.seleccionada;
+      this.servidor.getObjects(URLS.OPCIONES_EMPRESA, param).subscribe(
+        response => {
+          console.log(response);
+          if (response.success == 'true' && response.data) {
+            console.log(response.data,response.data.length)
+
+            for (let element of response.data) {
+              if (element.opcion == 'Modulo Proveedores'){
+                this.hayProveedores=true;
+              }
+              }
+          }
+      },
+  error =>{
+      console.debug(error);
+      console.log('hay Trigger servicios entrada' + error);
+      },
+      ()=>{});
+}
 
 
 checkPeriodo(periodicidad):string{

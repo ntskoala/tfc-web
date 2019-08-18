@@ -70,3 +70,16 @@
   .fecha .mat-form-field-label-wrapper   {
     top: 0px;
 }
+
+.isOk{
+    background: rgba(137, 199, 140,0.3);
+  }
+  .isNotOk{
+    background: rgba(247, 51, 51, 0.397);;
+  }
+  .boliche{
+      border-radius: 50%;
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+  }

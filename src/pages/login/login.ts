@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
    @Output() status: EventEmitter<string>=new EventEmitter<string>();
   usuario: Usuario = new Usuario(0,'','','','',0);
   //usuario: Object = {"user":"admin","password":"admin$2017","idioma":"es"};
-  //usuario: Usuario = new Usuario(0,'demo','demo','','',0);
   // usuario: Usuario = new Usuario(0,'Ana','123','','',0);
   modal: Modal = new Modal();
 public idioma: string = null;
