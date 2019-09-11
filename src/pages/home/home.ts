@@ -53,7 +53,7 @@ empresa;
 hoy: Date = new Date();
 public hayTrigger:boolean=false;
 public hayProveedores:boolean=false;
-
+public moduloMantenimiento:boolean=false;
   constructor(
     private sync: Sync, 
     public empresasService: EmpresasService,
@@ -325,6 +325,10 @@ hayTriggerServiciosEntrada(){
               if (element.opcion == 'Modulo Proveedores'){
                 this.hayProveedores=true;
               }
+              if (element.opcion == 'fichas maquinaria'){
+                console.log('MODULO MANTENIMIENTO ACTIVO');
+                this.moduloMantenimiento=true;;
+              } 
               }
           }
       },

@@ -104,6 +104,7 @@
 
   </mat-expansion-panel>
   <!-- <div *ngIf="empresasService.usuarioactivo.tipouser   == 'Mantenimiento' || empresasService.usuarioactivo.superuser == 1"> -->
+    <span *ngIf="moduloMantenimiento">
           <mat-expansion-panel [expanded]="mantenimientos.length < 4" >
               <mat-expansion-panel-header> 
                     <mat-panel-title>
@@ -160,6 +161,7 @@
     </mat-list-item>
    </mat-list>  
   </mat-expansion-panel>
+</span>
 <!-- </div> -->
                   
 
